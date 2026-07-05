@@ -35,17 +35,21 @@ func GetArticles(
 	db *ent.Client,
 	limit int,
 	offset int,
+	status *post.Status,
 ) ([]*ent.Post, int, error) {
 
-	total, err := db.Post.
-		Query().
-		Count(ctx)
+	query := db.Post.Query()
+
+	if status != nil {
+		query = query.Where(post.StatusEQ(*status))
+	}
+
+	total, err := query.Clone().Count(ctx)
 	if err != nil {
 		return nil, 0, err
 	}
 
-	articles, err := db.Post.
-		Query().
+	articles, err := query.
 		Limit(limit).
 		Offset(offset).
 		All(ctx)

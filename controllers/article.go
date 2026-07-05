@@ -3,6 +3,7 @@ package controllers
 import (
 	"net/http"
 	"sharingvisionbe/ent"
+	"sharingvisionbe/ent/post"
 	"sharingvisionbe/requests"
 	"sharingvisionbe/responses"
 	"sharingvisionbe/services"
@@ -49,11 +50,27 @@ func GetAll(db *ent.Client) gin.HandlerFunc {
 			return
 		}
 
+		statusQuery := c.Query("status")
+
+		var status *post.Status
+		if statusQuery != "" {
+			s := post.Status(statusQuery)
+
+			switch s {
+			case post.StatusPublish, post.StatusDraft, post.StatusTrash:
+				status = &s
+			default:
+				responses.JSONError(c.Writer, http.StatusBadRequest, "invalid status", nil)
+				return
+			}
+		}
+
 		articles, total, err := services.GetArticles(
 			c.Request.Context(),
 			db,
 			limit,
 			offset,
+			status,
 		)
 		if err != nil {
 			responses.JSONError(c.Writer, http.StatusInternalServerError, err.Error(), nil)
