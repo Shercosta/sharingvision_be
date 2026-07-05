@@ -17,6 +17,7 @@ func RouteInit(r *gin.Engine, db *ent.Client) {
 		{
 			articleById.GET("", controllers.GetArticleById(db))
 			articleById.PUT("", controllers.ModifyArticleById(db))
+			articleById.DELETE("", controllers.DeleteArticleById(db))
 		}
 	}
 }

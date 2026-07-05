@@ -144,3 +144,30 @@ func ModifyArticleById(db *ent.Client) gin.HandlerFunc {
 		responses.JSONSuccess(ctx.Writer, article, nil, nil)
 	}
 }
+
+func DeleteArticleById(db *ent.Client) gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		id, err := strconv.Atoi(ctx.Param("id"))
+		if err != nil {
+			responses.JSONError(ctx.Writer, http.StatusBadRequest, "invalid id", nil)
+			return
+		}
+
+		status := post.StatusTrash.String()
+
+		article, err := services.ModifyArticleById(
+			ctx.Request.Context(),
+			db,
+			id,
+			&requests.ModifyArticleRequest{
+				Status: &status,
+			},
+		)
+		if err != nil {
+			responses.JSONError(ctx.Writer, http.StatusInternalServerError, err.Error(), nil)
+			return
+		}
+
+		responses.JSONSuccess(ctx.Writer, article, nil, nil)
+	}
+}
