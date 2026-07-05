@@ -38,6 +38,7 @@ type PostMutation struct {
 	category      *string
 	status        *post.Status
 	created_date  *time.Time
+	updated_date  *time.Time
 	clearedFields map[string]struct{}
 	done          bool
 	oldValue      func(context.Context) (*Post, error)
@@ -328,6 +329,42 @@ func (m *PostMutation) ResetCreatedDate() {
 	m.created_date = nil
 }
 
+// SetUpdatedDate sets the "updated_date" field.
+func (m *PostMutation) SetUpdatedDate(t time.Time) {
+	m.updated_date = &t
+}
+
+// UpdatedDate returns the value of the "updated_date" field in the mutation.
+func (m *PostMutation) UpdatedDate() (r time.Time, exists bool) {
+	v := m.updated_date
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpdatedDate returns the old "updated_date" field's value of the Post entity.
+// If the Post object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *PostMutation) OldUpdatedDate(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpdatedDate is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpdatedDate requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpdatedDate: %w", err)
+	}
+	return oldValue.UpdatedDate, nil
+}
+
+// ResetUpdatedDate resets all changes to the "updated_date" field.
+func (m *PostMutation) ResetUpdatedDate() {
+	m.updated_date = nil
+}
+
 // Where appends a list predicates to the PostMutation builder.
 func (m *PostMutation) Where(ps ...predicate.Post) {
 	m.predicates = append(m.predicates, ps...)
@@ -362,7 +399,7 @@ func (m *PostMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *PostMutation) Fields() []string {
-	fields := make([]string, 0, 5)
+	fields := make([]string, 0, 6)
 	if m.title != nil {
 		fields = append(fields, post.FieldTitle)
 	}
@@ -377,6 +414,9 @@ func (m *PostMutation) Fields() []string {
 	}
 	if m.created_date != nil {
 		fields = append(fields, post.FieldCreatedDate)
+	}
+	if m.updated_date != nil {
+		fields = append(fields, post.FieldUpdatedDate)
 	}
 	return fields
 }
@@ -396,6 +436,8 @@ func (m *PostMutation) Field(name string) (ent.Value, bool) {
 		return m.Status()
 	case post.FieldCreatedDate:
 		return m.CreatedDate()
+	case post.FieldUpdatedDate:
+		return m.UpdatedDate()
 	}
 	return nil, false
 }
@@ -415,6 +457,8 @@ func (m *PostMutation) OldField(ctx context.Context, name string) (ent.Value, er
 		return m.OldStatus(ctx)
 	case post.FieldCreatedDate:
 		return m.OldCreatedDate(ctx)
+	case post.FieldUpdatedDate:
+		return m.OldUpdatedDate(ctx)
 	}
 	return nil, fmt.Errorf("unknown Post field %s", name)
 }
@@ -458,6 +502,13 @@ func (m *PostMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetCreatedDate(v)
+		return nil
+	case post.FieldUpdatedDate:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpdatedDate(v)
 		return nil
 	}
 	return fmt.Errorf("unknown Post field %s", name)
@@ -522,6 +573,9 @@ func (m *PostMutation) ResetField(name string) error {
 		return nil
 	case post.FieldCreatedDate:
 		m.ResetCreatedDate()
+		return nil
+	case post.FieldUpdatedDate:
+		m.ResetUpdatedDate()
 		return nil
 	}
 	return fmt.Errorf("unknown Post field %s", name)

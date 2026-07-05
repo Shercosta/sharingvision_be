@@ -74,6 +74,11 @@ func CreatedDate(v time.Time) predicate.Post {
 	return predicate.Post(sql.FieldEQ(FieldCreatedDate, v))
 }
 
+// UpdatedDate applies equality check predicate on the "updated_date" field. It's identical to UpdatedDateEQ.
+func UpdatedDate(v time.Time) predicate.Post {
+	return predicate.Post(sql.FieldEQ(FieldUpdatedDate, v))
+}
+
 // TitleEQ applies the EQ predicate on the "title" field.
 func TitleEQ(v string) predicate.Post {
 	return predicate.Post(sql.FieldEQ(FieldTitle, v))
@@ -327,6 +332,46 @@ func CreatedDateLT(v time.Time) predicate.Post {
 // CreatedDateLTE applies the LTE predicate on the "created_date" field.
 func CreatedDateLTE(v time.Time) predicate.Post {
 	return predicate.Post(sql.FieldLTE(FieldCreatedDate, v))
+}
+
+// UpdatedDateEQ applies the EQ predicate on the "updated_date" field.
+func UpdatedDateEQ(v time.Time) predicate.Post {
+	return predicate.Post(sql.FieldEQ(FieldUpdatedDate, v))
+}
+
+// UpdatedDateNEQ applies the NEQ predicate on the "updated_date" field.
+func UpdatedDateNEQ(v time.Time) predicate.Post {
+	return predicate.Post(sql.FieldNEQ(FieldUpdatedDate, v))
+}
+
+// UpdatedDateIn applies the In predicate on the "updated_date" field.
+func UpdatedDateIn(vs ...time.Time) predicate.Post {
+	return predicate.Post(sql.FieldIn(FieldUpdatedDate, vs...))
+}
+
+// UpdatedDateNotIn applies the NotIn predicate on the "updated_date" field.
+func UpdatedDateNotIn(vs ...time.Time) predicate.Post {
+	return predicate.Post(sql.FieldNotIn(FieldUpdatedDate, vs...))
+}
+
+// UpdatedDateGT applies the GT predicate on the "updated_date" field.
+func UpdatedDateGT(v time.Time) predicate.Post {
+	return predicate.Post(sql.FieldGT(FieldUpdatedDate, v))
+}
+
+// UpdatedDateGTE applies the GTE predicate on the "updated_date" field.
+func UpdatedDateGTE(v time.Time) predicate.Post {
+	return predicate.Post(sql.FieldGTE(FieldUpdatedDate, v))
+}
+
+// UpdatedDateLT applies the LT predicate on the "updated_date" field.
+func UpdatedDateLT(v time.Time) predicate.Post {
+	return predicate.Post(sql.FieldLT(FieldUpdatedDate, v))
+}
+
+// UpdatedDateLTE applies the LTE predicate on the "updated_date" field.
+func UpdatedDateLTE(v time.Time) predicate.Post {
+	return predicate.Post(sql.FieldLTE(FieldUpdatedDate, v))
 }
 
 // And groups predicates with the AND operator between them.

@@ -66,6 +66,20 @@ func (_c *PostCreate) SetNillableCreatedDate(v *time.Time) *PostCreate {
 	return _c
 }
 
+// SetUpdatedDate sets the "updated_date" field.
+func (_c *PostCreate) SetUpdatedDate(v time.Time) *PostCreate {
+	_c.mutation.SetUpdatedDate(v)
+	return _c
+}
+
+// SetNillableUpdatedDate sets the "updated_date" field if the given value is not nil.
+func (_c *PostCreate) SetNillableUpdatedDate(v *time.Time) *PostCreate {
+	if v != nil {
+		_c.SetUpdatedDate(*v)
+	}
+	return _c
+}
+
 // SetID sets the "id" field.
 func (_c *PostCreate) SetID(v int) *PostCreate {
 	_c.mutation.SetID(v)
@@ -115,6 +129,10 @@ func (_c *PostCreate) defaults() {
 		v := post.DefaultCreatedDate()
 		_c.mutation.SetCreatedDate(v)
 	}
+	if _, ok := _c.mutation.UpdatedDate(); !ok {
+		v := post.DefaultUpdatedDate()
+		_c.mutation.SetUpdatedDate(v)
+	}
 }
 
 // check runs all checks and user-defined validators on the builder.
@@ -148,6 +166,9 @@ func (_c *PostCreate) check() error {
 	}
 	if _, ok := _c.mutation.CreatedDate(); !ok {
 		return &ValidationError{Name: "created_date", err: errors.New(`ent: missing required field "Post.created_date"`)}
+	}
+	if _, ok := _c.mutation.UpdatedDate(); !ok {
+		return &ValidationError{Name: "updated_date", err: errors.New(`ent: missing required field "Post.updated_date"`)}
 	}
 	return nil
 }
@@ -200,6 +221,10 @@ func (_c *PostCreate) createSpec() (*Post, *sqlgraph.CreateSpec) {
 	if value, ok := _c.mutation.CreatedDate(); ok {
 		_spec.SetField(post.FieldCreatedDate, field.TypeTime, value)
 		_node.CreatedDate = value
+	}
+	if value, ok := _c.mutation.UpdatedDate(); ok {
+		_spec.SetField(post.FieldUpdatedDate, field.TypeTime, value)
+		_node.UpdatedDate = value
 	}
 	return _node, _spec
 }

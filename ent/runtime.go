@@ -26,6 +26,10 @@ func init() {
 	postDescCreatedDate := postFields[5].Descriptor()
 	// post.DefaultCreatedDate holds the default value on creation for the created_date field.
 	post.DefaultCreatedDate = postDescCreatedDate.Default.(func() time.Time)
-	// post.UpdateDefaultCreatedDate holds the default value on update for the created_date field.
-	post.UpdateDefaultCreatedDate = postDescCreatedDate.UpdateDefault.(func() time.Time)
+	// postDescUpdatedDate is the schema descriptor for updated_date field.
+	postDescUpdatedDate := postFields[6].Descriptor()
+	// post.DefaultUpdatedDate holds the default value on creation for the updated_date field.
+	post.DefaultUpdatedDate = postDescUpdatedDate.Default.(func() time.Time)
+	// post.UpdateDefaultUpdatedDate holds the default value on update for the updated_date field.
+	post.UpdateDefaultUpdatedDate = postDescUpdatedDate.UpdateDefault.(func() time.Time)
 }

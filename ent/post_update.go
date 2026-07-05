@@ -84,9 +84,9 @@ func (_u *PostUpdate) SetNillableStatus(v *post.Status) *PostUpdate {
 	return _u
 }
 
-// SetCreatedDate sets the "created_date" field.
-func (_u *PostUpdate) SetCreatedDate(v time.Time) *PostUpdate {
-	_u.mutation.SetCreatedDate(v)
+// SetUpdatedDate sets the "updated_date" field.
+func (_u *PostUpdate) SetUpdatedDate(v time.Time) *PostUpdate {
+	_u.mutation.SetUpdatedDate(v)
 	return _u
 }
 
@@ -125,9 +125,9 @@ func (_u *PostUpdate) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (_u *PostUpdate) defaults() {
-	if _, ok := _u.mutation.CreatedDate(); !ok {
-		v := post.UpdateDefaultCreatedDate()
-		_u.mutation.SetCreatedDate(v)
+	if _, ok := _u.mutation.UpdatedDate(); !ok {
+		v := post.UpdateDefaultUpdatedDate()
+		_u.mutation.SetUpdatedDate(v)
 	}
 }
 
@@ -175,8 +175,8 @@ func (_u *PostUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if value, ok := _u.mutation.Status(); ok {
 		_spec.SetField(post.FieldStatus, field.TypeEnum, value)
 	}
-	if value, ok := _u.mutation.CreatedDate(); ok {
-		_spec.SetField(post.FieldCreatedDate, field.TypeTime, value)
+	if value, ok := _u.mutation.UpdatedDate(); ok {
+		_spec.SetField(post.FieldUpdatedDate, field.TypeTime, value)
 	}
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -254,9 +254,9 @@ func (_u *PostUpdateOne) SetNillableStatus(v *post.Status) *PostUpdateOne {
 	return _u
 }
 
-// SetCreatedDate sets the "created_date" field.
-func (_u *PostUpdateOne) SetCreatedDate(v time.Time) *PostUpdateOne {
-	_u.mutation.SetCreatedDate(v)
+// SetUpdatedDate sets the "updated_date" field.
+func (_u *PostUpdateOne) SetUpdatedDate(v time.Time) *PostUpdateOne {
+	_u.mutation.SetUpdatedDate(v)
 	return _u
 }
 
@@ -308,9 +308,9 @@ func (_u *PostUpdateOne) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (_u *PostUpdateOne) defaults() {
-	if _, ok := _u.mutation.CreatedDate(); !ok {
-		v := post.UpdateDefaultCreatedDate()
-		_u.mutation.SetCreatedDate(v)
+	if _, ok := _u.mutation.UpdatedDate(); !ok {
+		v := post.UpdateDefaultUpdatedDate()
+		_u.mutation.SetUpdatedDate(v)
 	}
 }
 
@@ -375,8 +375,8 @@ func (_u *PostUpdateOne) sqlSave(ctx context.Context) (_node *Post, err error) {
 	if value, ok := _u.mutation.Status(); ok {
 		_spec.SetField(post.FieldStatus, field.TypeEnum, value)
 	}
-	if value, ok := _u.mutation.CreatedDate(); ok {
-		_spec.SetField(post.FieldCreatedDate, field.TypeTime, value)
+	if value, ok := _u.mutation.UpdatedDate(); ok {
+		_spec.SetField(post.FieldUpdatedDate, field.TypeTime, value)
 	}
 	_node = &Post{config: _u.config}
 	_spec.Assign = _node.assignValues

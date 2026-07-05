@@ -26,7 +26,9 @@ type Post struct {
 	// Status holds the value of the "status" field.
 	Status post.Status `json:"status,omitempty"`
 	// CreatedDate holds the value of the "created_date" field.
-	CreatedDate  time.Time `json:"created_date,omitempty"`
+	CreatedDate time.Time `json:"created_date,omitempty"`
+	// UpdatedDate holds the value of the "updated_date" field.
+	UpdatedDate  time.Time `json:"updated_date,omitempty"`
 	selectValues sql.SelectValues
 }
 
@@ -39,7 +41,7 @@ func (*Post) scanValues(columns []string) ([]any, error) {
 			values[i] = new(sql.NullInt64)
 		case post.FieldTitle, post.FieldContent, post.FieldCategory, post.FieldStatus:
 			values[i] = new(sql.NullString)
-		case post.FieldCreatedDate:
+		case post.FieldCreatedDate, post.FieldUpdatedDate:
 			values[i] = new(sql.NullTime)
 		default:
 			values[i] = new(sql.UnknownType)
@@ -92,6 +94,12 @@ func (_m *Post) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.CreatedDate = value.Time
 			}
+		case post.FieldUpdatedDate:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field updated_date", values[i])
+			} else if value.Valid {
+				_m.UpdatedDate = value.Time
+			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
 		}
@@ -142,6 +150,9 @@ func (_m *Post) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("created_date=")
 	builder.WriteString(_m.CreatedDate.Format(time.ANSIC))
+	builder.WriteString(", ")
+	builder.WriteString("updated_date=")
+	builder.WriteString(_m.UpdatedDate.Format(time.ANSIC))
 	builder.WriteByte(')')
 	return builder.String()
 }

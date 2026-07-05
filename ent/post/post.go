@@ -24,6 +24,8 @@ const (
 	FieldStatus = "status"
 	// FieldCreatedDate holds the string denoting the created_date field in the database.
 	FieldCreatedDate = "created_date"
+	// FieldUpdatedDate holds the string denoting the updated_date field in the database.
+	FieldUpdatedDate = "updated_date"
 	// Table holds the table name of the post in the database.
 	Table = "posts"
 )
@@ -36,6 +38,7 @@ var Columns = []string{
 	FieldCategory,
 	FieldStatus,
 	FieldCreatedDate,
+	FieldUpdatedDate,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -55,8 +58,10 @@ var (
 	CategoryValidator func(string) error
 	// DefaultCreatedDate holds the default value on creation for the "created_date" field.
 	DefaultCreatedDate func() time.Time
-	// UpdateDefaultCreatedDate holds the default value on update for the "created_date" field.
-	UpdateDefaultCreatedDate func() time.Time
+	// DefaultUpdatedDate holds the default value on creation for the "updated_date" field.
+	DefaultUpdatedDate func() time.Time
+	// UpdateDefaultUpdatedDate holds the default value on update for the "updated_date" field.
+	UpdateDefaultUpdatedDate func() time.Time
 )
 
 // Status defines the type for the "status" enum field.
@@ -117,4 +122,9 @@ func ByStatus(opts ...sql.OrderTermOption) OrderOption {
 // ByCreatedDate orders the results by the created_date field.
 func ByCreatedDate(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldCreatedDate, opts...).ToFunc()
+}
+
+// ByUpdatedDate orders the results by the updated_date field.
+func ByUpdatedDate(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldUpdatedDate, opts...).ToFunc()
 }

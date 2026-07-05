@@ -24,7 +24,8 @@ func (Post) Fields() []ent.Field {
 			"Draft",
 			"Trash",
 		).Default("Draft"),
-		field.Time("created_date").Default(time.Now).UpdateDefault(time.Now),
+		field.Time("created_date").Default(time.Now).Immutable(),
+		field.Time("updated_date").Default(time.Now).UpdateDefault(time.Now),
 	}
 }
 

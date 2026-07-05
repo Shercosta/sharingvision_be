@@ -16,6 +16,7 @@ var (
 		{Name: "category", Type: field.TypeString, Size: 100},
 		{Name: "status", Type: field.TypeEnum, Enums: []string{"Publish", "Draft", "Trash"}, Default: "Draft"},
 		{Name: "created_date", Type: field.TypeTime},
+		{Name: "updated_date", Type: field.TypeTime},
 	}
 	// PostsTable holds the schema information for the "posts" table.
 	PostsTable = &schema.Table{
