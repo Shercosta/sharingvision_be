@@ -32,3 +32,7 @@
 if things go well, you will automatically run the migrations needed, and then you can try the requests in the postman collection.
 
 _No Agentic AI was used, i dont even use Claude (or vibe code for that matter). All code was templated from my previous project._
+
+> Update :
+>
+> > I worked on Backend first, then Frontend. I noticed the frontend needs more feature (such as filtering based on status). So i added some more code while developing the frontend
