@@ -9,3 +9,5 @@
 5. run `go run main.go`
 
 if things go well, you will automatically run the migrations needed, and then you can try the requests in the postman collection.
+
+_No Agentic AI was used, i dont even use Claude (or vibe code for that matter). All code was templated from my previous project._
