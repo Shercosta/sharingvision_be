@@ -1,12 +1,33 @@
-# How to run
+# How to Run
 
 > by Shercosta
 
-1. This project is using go, so make sure to have go installed
-2. run go mod tidy
-3. feel free to modify the `.env.local` (add your database stuff in there, and yes do not forget to have a fresh database ready for this, and the port for the api to run in)
-4. get the postman collection .json in the root, import it to postman
-5. run `go run main.go`
+## Prerequisites
+
+- Go installed
+- A MySQL server
+- An empty database created for this project
+
+## Setup
+
+1. Clone the repository.
+2. Run the following command to install all dependencies:
+
+   ```bash
+   go mod tidy
+   ```
+
+3. Update the `.env.local` file with your database credentials and the port you want the API to run on.
+
+4. Make sure the database specified in `.env.local` already exists. The application will automatically create the required tables when it starts.
+
+5. Import the Postman collection (`*.json`) from the project root into Postman.
+
+6. Start the application:
+
+   ```bash
+   go run main.go
+   ```
 
 if things go well, you will automatically run the migrations needed, and then you can try the requests in the postman collection.
 
